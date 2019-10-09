@@ -1,0 +1,57 @@
+body{
+  background: #1b2631;
+  color: #f1c40f;
+}
+.container{
+margin: 0 auto;
+width:60%;
+}
+.screen{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+.order{
+  width: 65%;
+  text-align: center;
+  font-size: 25px;
+  border: 2px solid #fcf3cf;
+  height: 100px;
+  padding: 35px;
+  box-sizing: border-box;
+}
+.cancel-button{
+  width:30%;
+  height: 100px;
+  font-size: 30px;
+  border: 2px solid #fcf3cf;
+  color: #fcf3cf;
+  background: #1b2631;
+}
+.cooking{
+  display:none;
+}
+.done{
+  display: none;
+}
+.buttons{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.coffee-button{
+  width:30%;
+  height: 120px;
+  margin-bottom: 15px;
+  font-size: 25px;
+  border: 2px solid #f1c40f;
+  color: #f1c40f;
+  background: #1b2631;
+}
+.payment{
+  border: 2px solid #1b2631;
+  color: #1b2631;
+  background: #f1c40f;
+}
+
