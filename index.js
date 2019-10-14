@@ -1,75 +1,174 @@
-// переменная обхем молока
-// объект с коффе и цена, объем молока, объем напитка
-// объект со стаканчиками б- кол-во м-кол-во
-
 let milk = 1000;
-const coffee = {
+let order = [];
+
+let price = 0;
+let name = "";
+
+const orderName = document.querySelector(".order-name");
+const orderPrice = document.querySelector(".order-price");
+const askOrder = document.querySelector(".ask-order");
+const cooking = document.querySelector(".cooking");
+const progress = document.querySelector("progress");
+const doneEl = document.querySelector(".done");
+const doneImg = doneEl.querySelector("img");
+const buttons = document.querySelectorAll("[data-item-name]");
+const syrupEl = document.querySelector(".syrup");
+
+const items = {
   espresso: {
+    name: "Эспрессо",
+    capacity: 100,
     price: 90,
-    capacity: 100
+    type: "coffee"
   },
   latte: {
-    price: 130,
+    name: "Латте",
     capacity: 250,
-    capacityMilk:100
+    milkCapacity: 100,
+    price: 130,
+    type: "coffee"
   },
   capucino: {
+    name: "Капучино",
     price: 110,
     capacity: 250,
-    capacityMilk:80
+    milkCapacity: 80,
+    type: "coffee"
   },
   bananaLatte: {
+    name: "Банановый латте",
     price: 150,
     capacity: 300,
-    capacityMilk:100,
-    syrup:50
+    milkCapacity: 100,
+    type: "authrsCoffe"
   },
   vanillaCapucino: {
+    name: "Ванильный капучино",
     price: 150,
     capacity: 300,
-    capacityMilk:80,
-    syrup:50
+    milkCapacity: 80,
+    type: "authrsCoffe"
   },
   flatWhite: {
+    name: "Флэт уайт",
     price: 100,
     capacity: 280,
-    capacityMilk:120
+    milkCapacity: 120
   },
   milk: {
+    name: "Молоко",
     price: 25,
     capacity: 50,
-    capacityMilk: 50
+    type: "milk"
   },
   cherry: {
+    name: "Вишневый сироп",
     price: 35,
-    syrup:50
+    capacity: 50,
+    type: "syrup"
   }
-}
-let cup = {
-  big: {
-    capacity: 380,
-    amount: 6
-  },
-  small: {
-    capacity:250,
-    amount: 5
+};
+
+const cups = {
+  250: 5,
+  380: 6
+};
+
+const getTime = type => {
+  const ms = 1000;
+  switch (type) {
+    case "custom":
+      return 8 * ms;
+    case "authrsCoffe":
+      return 5 * ms;
+    default:
+      return 3 * ms;
   }
-}
-let syrup = {
-  vanilla: 500,
-  banana: 500,
-  cherry: 500
-}
+};
 
-const buttons = document.querySelectorAll("button.coffee-button");
+// const disableSyrup = () => {
+//   syrupEl.setAttribute("disabled", "disabled");
+// };
 
-function addEventListenerList(list, event, fn) {
-  for (var i = 0, len = list.length; i < len; i++) {
-    console.log(list[i])
-      list[i].addEventListener(event, fn);
+const toggle = (exclude = []) => {
+  buttons.forEach(button => {
+    const dataName = button.dataset.itemName;
+    if (!exclude.includes(dataName)) {
+      button.setAttribute("disabled", "disabled");
+    } else {
+      button.removeAttribute("disabled");
+    }
+  });
+};
+
+const updateScreen = () => {
+  const price = order.reduce((price, cur) => items[cur].price + price, 0);
+  let name = "";
+  if (order.length === 1) {
+    name = items[order[0]].name;
+  } else {
+    let coffeName;
+    let syrupName;
+    let milkName;
   }
-}
+  askOrder.classList.add("hidden");
+  orderName.textContent = name;
+  orderPrice.textContent = `${price} руб`;
+};
 
-const a = (e) => console.log(e.target);
+const makeCoffee = name => {
+  const item = items[name];
 
-addEventListenerList(buttons, 'click', a); 
+  order.push(name);
+
+  if (name !== "espresso" && name !== "latte" && name !== "capucino") {
+    toggle(name === "milk" ? ["espresso", ...order] : order);
+  } else {
+    toggle(["cherry", ...order]);
+  }
+
+  updateScreen();
+};
+
+const clear = () => {
+  price = 0;
+  name = "";
+  askOrder.classList.remove("hidden");
+  orderName.textContent = "";
+  orderPrice.textContent = "";
+};
+
+const done = () => {
+  doneEl.classList.remove("hidden");
+  doneEl.classList.add("done_alert");
+  doneImg.src = "https://source.unsplash.com/200x200/?coffee";
+};
+
+const pay = () => {
+  //   clear();
+  cooking.classList.remove("hidden");
+  let progressValue = 0;
+  const tId = setInterval(() => {
+    progress.value = progressValue = progressValue + 10;
+    if (progressValue === 100) {
+      clearInterval(tId);
+      done();
+    }
+  }, getTime(order.length > 1 ? "custom" : order[0].type) / 10);
+
+  order.forEach(item => {
+    if (items[item].milkCapacity || items[item].type === "milk") {
+      milk -= items[item].milkCapacity || items[item].capacity;
+    }
+  });
+};
+
+document.querySelector(".buttons").addEventListener("click", event => {
+  const name = event.target.dataset.itemName;
+  if (name) {
+    makeCoffee(name);
+  }
+});
+
+document.querySelector(".cancel-button").addEventListener("click", clear);
+document.querySelector(".payment").addEventListener("click", pay);

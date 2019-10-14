@@ -1,38 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Coffee</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="styles.css">
-  <title>Coffee</title>
-</head>
+  <body>
+    <div class="container">
+      <div class="screen">
+        <span class="order">
+          <span class="ask-order">Выберите напиток</span>
+          <span class="order-name"></span>
+          <span class="order-price"></span>
+          <span class="cooking  hidden"
+            >Напиток готовится <progress value="0" max="100"></progress
+          ></span>
+        </span>
+        <button class="cancel-button">Отмена</button>
+      </div>
 
-<body>
-  <div class="container">
-    <div class="screen">
-      <span class="order">Эспрессо 90 руб.</span>
-      <button class="cancel-button">Отмена</button>
-      <span class="cooking">Напиток готовится</span>
-      <div class="done">
+      <div class="buttons">
+        <button class="coffee-button" data-item-name="espresso">
+          Эспрессо
+        </button>
+        <button class="coffee-button" data-item-name="latte">Латте</button>
+        <button class="coffee-button" data-item-name="capucino">
+          Капучино
+        </button>
+        <button class="coffee-button" data-item-name="bananaLatte">
+          Банановый латте
+        </button>
+        <button class="coffee-button" data-item-name="vanillaCapucino">
+          Ванильный капучино
+        </button>
+        <button class="coffee-button" data-item-name="flatWhite">
+          Флэт-Уайт
+        </button>
+        <button class="coffee-button milk" data-item-name="milk">Молоко</button>
+        <button class="coffee-button syrup" data-item-name="cherry" disabled>
+          Вишневый сироп
+        </button>
+        <button class="coffee-button payment">Оплата</button>
+      </div>
+      <div class="done hidden">
         <span>Напиток готов</span>
-        <img src="" alt="">
+        <img src="" alt="" />
       </div>
     </div>
-    <div class="buttons">
-      <button class="coffee-button" data-name="espresso" data-price="90">Эспрессо</button>
-      <button class="coffee-button" data-name="latte" data-price="130">Латте</button>
-      <button class="coffee-button" data-name="capucino" data-price="110">Капучино</button>
-      <button class="coffee-button" data-name="banana-latte" data-price="150">Банановый латте</button>
-      <button class="coffee-button" data-name="vanila-latte" data-price="150">Ванильный латте</button>
-      <button class="coffee-button" data-name="flat-white" data-price="100">Флэт-Уайт</button>
-      <button class="coffee-button" data-name="milk" data-price="25">Молоко</button>
-      <button class="coffee-button" data-name="cherry" data-price="35">Вишневый сироп</button>
-      <button class="coffee-button payment">Оплата</button>
-    </div>
-  </div>
-</body>
-<script src="./index.js"></script>
-
+  </body>
+  <script src="./index.js"></script>
 </html>
